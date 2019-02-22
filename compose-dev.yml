@@ -1,0 +1,25 @@
+version: '3'
+volumes:
+  dbdata: 
+services:
+  db:
+    image: postgres
+    env_file: 
+      - ./env/postgres.env            
+    ports:
+      - '5432:5432'
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+  web:
+    build: 
+      context: .
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file: 
+      - ./env/postgres.env  
+      - ./env/django.env 
+    volumes:
+      - ./data:/data
+    depends_on:
+      - db
+    ports:
+      - '8000:8000'
