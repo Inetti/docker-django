@@ -6,3 +6,5 @@ COPY data/requirements.txt /data/
 RUN pip install --upgrade pip
 RUN pip install -r /data/requirements.txt
 COPY data /data/
+RUN useradd -s /bin/bash -u 1000 djangouser
+USER djangouser
